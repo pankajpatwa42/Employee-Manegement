@@ -1,33 +1,41 @@
 package Employee.Models;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
 
 @Entity
 public class Assets {
 	
 	
 	@ManyToOne
-	private Organization id;
+	private Organization organization;
 	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int assestId;
-	private int furniture;
-	private int laptop;
-	private int chair;
+	
+	@NotEmpty(message = "asset name not be empty")
+	private String assetName;
+//	@NotEmpty(message = "Date not be empty or date format in yyyy-mm-dd")
+	private Date issueDate; 
 	
 	
 	
-	public Organization getId() {
-		return id;
+	
+	public Organization getOrganization() {
+		return organization;
 	}
-	public void setId(Organization id) {
-		this.id = id;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 	public int getAssestId() {
 		return assestId;
@@ -35,24 +43,19 @@ public class Assets {
 	public void setAssestId(int assestId) {
 		this.assestId = assestId;
 	}
-	public int getFurniture() {
-		return furniture;
+	public String getAssetName() {
+		return assetName;
 	}
-	public void setFurniture(int furniture) {
-		this.furniture = furniture;
+	public void setAssetName(String assetName) {
+		this.assetName = assetName;
 	}
-	public int getLaptop() {
-		return laptop;
+	public Date getIssueDate() {
+		return issueDate;
 	}
-	public void setLaptop(int laptop) {
-		this.laptop = laptop;
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
 	}
-	public int getChair() {
-		return chair;
-	}
-	public void setChair(int chair) {
-		this.chair = chair;
-	}
+	
 	
 	
 	

@@ -40,10 +40,11 @@ public class EmployeeController {
 		return new ResponseEntity<Employee>(employeeService.saveEmployee(employee),HttpStatus.CREATED);
 	}
 	
-	@GetMapping
+	@GetMapping("/all")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<Employee> getAllEmployee(){return employeeService.getAllEmployee();}
 	
-	@GetMapping("{id}")
+	@GetMapping("/employeeid/{id}")
 	public ResponseEntity<?> getEmployeeById(@PathVariable("id") int id)
 	{
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -56,7 +57,7 @@ public class EmployeeController {
 		}
 			
 	}
-	@PutMapping("{id}")
+	@PutMapping("/update/{id}")
 //	@RequestMapping(method = RequestMethod.PUT, path = "/employee/{id}")  //updation for own profilre only
 	public ResponseEntity<?> updateEmployee(@PathVariable("id") int id,@Valid @RequestBody Employee employee)
 	{
@@ -73,7 +74,7 @@ public class EmployeeController {
 	}
 	
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/delete/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String deleteEmployee(@PathVariable("id") int id) {
 		employeeService.deleteEmployee(id);
@@ -81,7 +82,8 @@ public class EmployeeController {
 	}
 	
 	@ResponseStatus(HttpStatus.OK)
-	@PutMapping("/adminsetrole/{id}")
+	@PutMapping("/updaterole/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public void adminSetRole(@PathVariable("id") Integer id , @RequestBody Role role)
 	{
 		employeeService.AdminsetRole(id, role);

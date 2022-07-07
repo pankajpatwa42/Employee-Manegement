@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Employee implements UserDetails{
 	
@@ -30,7 +33,7 @@ public class Employee implements UserDetails{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int empno;
 	
-//	@NotEmpty(message = "Firstname not be empty")
+	@NotEmpty(message = "Firstname not be empty")
 	private String firstName;
 	
 	@NotEmpty(message = "Lastname not be empty")
@@ -40,11 +43,12 @@ public class Employee implements UserDetails{
 	private String workDept;
 	private int salary;
 	
-	@Email
+	@Email(message = "give proper Email format")
+	@Column(unique=true)
 	private String email;
 	
 	@NotEmpty(message = "Password not be Empty")
-//	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])",message = "Password contain atleast 1 digit and one lowercase[a-z]")
+//	 @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])",message = "Password contain atleast 1 digit and one lowercase[a-z]")
 	private String password;
 
 	
@@ -54,6 +58,7 @@ public class Employee implements UserDetails{
 	
 	
 	@ManyToOne
+	@JsonBackReference
 	private Organization organization;
 	
 	public int getEmpno() {

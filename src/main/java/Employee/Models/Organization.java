@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 public class Organization {
@@ -28,13 +30,15 @@ public class Organization {
 	private String name;
 	@NotEmpty(message = "Manager name reqiured!!!!!!")
 	private String manager;
-	@NotEmpty(message = "Date should be their or Invalid Date Fromat (yyyy-mm-dd)")
+//	@NotEmpty(message = "Date should be their or Invalid Date Fromat (yyyy-mm-dd)")
 	private Date established;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="organization")
+	@JsonManagedReference
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="organization")
 	private List<Employee> employees = new ArrayList<>();    //one org have many employeess....
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy="id")
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy="organization")
 	private List<Assets> assests = new ArrayList<>();    // one org have many assests p
 	
 	

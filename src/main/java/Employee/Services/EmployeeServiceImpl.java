@@ -106,20 +106,58 @@ public class EmployeeServiceImpl implements EmployeeService{
 			Role.add(r1);
 			asr.setRole(Role);
 			employeeRepository.save(asr);
-		}else if (role.getRoleName().equals("ROLE_NORMAL")) {
-			System.out.println("NORMAL USER");
-			throw new EmployeeRoleException("Already Role is NORMAL ");
-			
-		}	else {
+//			throw new EmployeeRoleException("Role Has been Changed");
+		}else if (role.getRoleName().equals("ROLE_NORMAL"))
+		{
+			Role r1 = new Role ();
+			r1.setReolId(1);
+			r1.setRoleName("ROLE_NORMAL");
+			Set<Role> Role = new HashSet<>();
+			Role.add(r1);
+			asr.setRole(Role);
+			employeeRepository.save(asr);
+		}else {
 			System.out.println("Employee Id invalid");
 			throw new EmployeeRoleException("Employee Id invalid which you logged in!!!!");
 
 		}
-		
 	}
 		
-	
-	}
+		
+		
+		
+		
+		
+		
+//		else if (role.getRoleName().equals("ROLE_NORMAL")) {
+//			System.out.println("NORMAL USER");
+//			throw new EmployeeRoleException("Already Role is NORMAL ");
+//			
+//		}	else {
+//			System.out.println("Employee Id invalid");
+//			throw new EmployeeRoleException("Employee Id invalid which you logged in!!!!");
+
+		}
+//		if (role.getRoleName().equals("ROLE_NORMAL"))
+//		{
+//			Role r1 = new Role ();
+//			r1.setReolId(1);
+//			r1.setRoleName("ROLE_NORMAL");
+//			Set<Role> Role = new HashSet<>();
+//			Role.add(r1);
+//			asr.setRole(Role);
+//			employeeRepository.save(asr);
+//		}else if (role.getRoleName().equals("ROLE_ADMIN")) {
+//			System.out.println("ADMIN USER");
+//			throw new EmployeeRoleException("Already Role is ADMIN ");
+//			
+//		}	else {
+//			System.out.println("Employee Id invalid");
+//			throw new EmployeeRoleException("Employee Id invalid which you logged in!!!!");
+//
+//		}
+		
+
 
 
 

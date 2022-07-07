@@ -1,12 +1,15 @@
 package Employee.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Employee.Exception.ResourceNotFoundException;
+import Employee.Models.Employee;
 import Employee.Models.Organization;
+import Employee.Repository.EmployeeRepository;
 import Employee.Repository.OrganizationRepository;
 
 
@@ -16,16 +19,21 @@ public class OrganizationServiceImpl implements OrganizationService {
 	
 	@Autowired
 	private OrganizationRepository organizationRepository;
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
 
 	public Organization saveOrganization(Organization organization) {
 		return organizationRepository.save(organization);
 	}
 
 	public List<Organization> getAllOrganization() {
+//		List<Employee> emp = employeeRepository.findAll();
 		return organizationRepository.findAll();
 	}
 
 	public Organization getOrganizationById(int id) {
+		
 		return organizationRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Organization","ID",id));
 	}
 	

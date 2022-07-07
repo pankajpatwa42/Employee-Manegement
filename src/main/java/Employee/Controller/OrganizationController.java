@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Employee.Models.Organization;
+import Employee.Repository.EmployeeRepository;
 import Employee.Services.OrganizationServiceImpl;
 
 
@@ -28,8 +29,6 @@ public class OrganizationController {
 	
 	@Autowired
 	private OrganizationServiceImpl organizationService;
-	
-
 	
 	@PostMapping("/save")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -43,6 +42,7 @@ public class OrganizationController {
 	public List<Organization> getAllUser(){return organizationService.getAllOrganization();}
 	
 	@GetMapping("{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Organization> getOrganizationById(@PathVariable("id") int id)
 	{
 		return new ResponseEntity<Organization>(organizationService.getOrganizationById(id),HttpStatus.OK);		
@@ -55,12 +55,12 @@ public class OrganizationController {
 	}
 	
 	
-	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
-	public String deleteOrganization (@PathVariable("id") int id) {
-		organizationService.deleteOrganization(id);
-		return  "Successfully Deleted";
-	}
+//	@DeleteMapping("/{id}")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public String deleteOrganization (@PathVariable("id") int id) {
+//		organizationService.deleteOrganization(id);
+//		return  "Successfully Deleted";
+//	}
 }
 
 
