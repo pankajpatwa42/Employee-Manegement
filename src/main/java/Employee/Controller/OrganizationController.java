@@ -30,16 +30,17 @@ public class OrganizationController {
 	@Autowired
 	private OrganizationServiceImpl organizationService;
 	
-	@PostMapping("/save")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Organization> saveOrganization(@Valid @RequestBody  Organization organization)
-	{
-
-		return new ResponseEntity<Organization>(organizationService.saveOrganization(organization),HttpStatus.CREATED);
-	}
-	
+//	@PostMapping("/save")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public ResponseEntity<Organization> saveOrganization(@Valid @RequestBody  Organization organization)
+//	{
+//
+//		return new ResponseEntity<Organization>(organizationService.saveOrganization(organization),HttpStatus.CREATED);
+//	}
+//	
 	@GetMapping
-	public List<Organization> getAllUser(){return organizationService.getAllOrganization();}
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<Organization> getAllOrganisation(){return organizationService.getAllOrganization();}
 	
 	@GetMapping("{id}")
 	@PreAuthorize("hasRole('ADMIN')")

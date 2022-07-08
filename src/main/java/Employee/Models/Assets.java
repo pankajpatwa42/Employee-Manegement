@@ -10,11 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 public class Assets {
 	
 	
+	@JsonBackReference
 	@ManyToOne
 	private Organization organization;
 	

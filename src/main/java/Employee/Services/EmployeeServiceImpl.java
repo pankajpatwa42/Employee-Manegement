@@ -9,6 +9,7 @@ import org.apache.tomcat.util.http.fileupload.util.mime.RFC2231Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,7 +45,20 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public Employee saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
-		Organization getOrg = organizationRepository.findById(2).orElseThrow(null);
+		List<Employee> employ1 = employeeRepository.findAll();
+		if(employ1.isEmpty())
+		{
+			Organization getOrg = organizationRepository.findById(1).orElseThrow(null);
+			employee.setOrganization(getOrg);
+			Role role = roleRepository.findById(2).orElseThrow(null);
+			employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+			Set<Role> roles = new HashSet<>();
+			roles.add(role);
+			employee.setRole(roles);
+			return employeeRepository.save(employee);
+			
+		}else {
+		Organization getOrg = organizationRepository.findById(1).orElseThrow(null);
 		employee.setOrganization(getOrg);
 		Role role = roleRepository.findById(1).orElseThrow(null);
 		employee.setPassword(passwordEncoder.encode(employee.getPassword()));
@@ -52,6 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		roles.add(role);
 		employee.setRole(roles);
 		return employeeRepository.save(employee);
+		}
 	}
 
 	
@@ -106,7 +121,6 @@ public class EmployeeServiceImpl implements EmployeeService{
 			Role.add(r1);
 			asr.setRole(Role);
 			employeeRepository.save(asr);
-//			throw new EmployeeRoleException("Role Has been Changed");
 		}else if (role.getRoleName().equals("ROLE_NORMAL"))
 		{
 			Role r1 = new Role ();

@@ -3,6 +3,7 @@ package Employee.Services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import Employee.Exception.ResourceNotFoundException;
@@ -21,26 +22,30 @@ public class AssestsServiceImpl implements AssestsService {
 	private OrganizationRepository organizationRepository;
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public Assets saveAssets(Assets assets) {
 		// TODO Auto-generated method stub
-		Organization org = organizationRepository.findById(2).orElseThrow(null);
+		Organization org = organizationRepository.findById(1).orElseThrow(null);
 		assets.setOrganization(org);
 		return assestsRepository.save(assets);
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<Assets> getAllAssets() {
 		// TODO Auto-generated method stub
 		return assestsRepository.findAll();
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public Assets getAssetsById(int id) {
 		// TODO Auto-generated method stub
 		return assestsRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Assests","ID",id));
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public Assets updateAssets(Assets assets, int id) {
 		// TODO Auto-generated method stub
 		Assets existingAssests = assestsRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Assest","ID",id));
@@ -51,6 +56,7 @@ public class AssestsServiceImpl implements AssestsService {
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteAssets(int id) {
 		// TODO Auto-generated method stub
 		assestsRepository.deleteById(id);

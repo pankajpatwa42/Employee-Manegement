@@ -38,6 +38,7 @@ public class Organization {
 	private List<Employee> employees = new ArrayList<>();    //one org have many employeess....
 	
 	
+	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL,mappedBy="organization")
 	private List<Assets> assests = new ArrayList<>();    // one org have many assests p
 	

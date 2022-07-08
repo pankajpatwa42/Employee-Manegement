@@ -28,7 +28,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	public List<Organization> getAllOrganization() {
-//		List<Employee> emp = employeeRepository.findAll();
 		return organizationRepository.findAll();
 	}
 

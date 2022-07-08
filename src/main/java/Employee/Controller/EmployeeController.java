@@ -84,9 +84,10 @@ public class EmployeeController {
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/updaterole/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public void adminSetRole(@PathVariable("id") Integer id , @RequestBody Role role)
+	public ResponseEntity<?> adminSetRole(@PathVariable("id") Integer id , @RequestBody Role role)
 	{
 		employeeService.AdminsetRole(id, role);
+		return new ResponseEntity<>("Role is updated ",HttpStatus.OK);
 	}
 }
 	

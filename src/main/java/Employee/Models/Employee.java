@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -48,7 +49,11 @@ public class Employee implements UserDetails{
 	private String email;
 	
 	@NotEmpty(message = "Password not be Empty")
-//	 @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])",message = "Password contain atleast 1 digit and one lowercase[a-z]")
+//	@Pattern(regexp = "^[a-zA-Z0-9]{4,12}$",message = "Password contain atleast 1 digit and one lowercase[a-z]")
+//	@Pattern(regexp = "^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$", message= "Password contain atleast 1 digit and one lowercase[a-z] and minimum 8 digit")
+//	@Size(min = 8 ,max =12,message="Minimum 8 letter and maximum 12 letter")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$",message = "Password contain atleast 1 digit and one lowercase[a-z] and uppercase[A-Z] and minimum 8 character")
+
 	private String password;
 
 	

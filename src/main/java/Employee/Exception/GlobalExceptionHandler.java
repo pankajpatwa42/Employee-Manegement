@@ -1,6 +1,7 @@
 package Employee.Exception;
 
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,5 +51,27 @@ public class GlobalExceptionHandler {
 		return errorMap;
 	}
 	
-
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	public String duplicateValue(SQLIntegrityConstraintViolationException ex)
+	{
+		return "Duplicate Entry of value!!!";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
