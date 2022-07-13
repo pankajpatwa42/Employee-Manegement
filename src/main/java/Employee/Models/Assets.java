@@ -34,11 +34,7 @@ public class Assets {
 	
 	@NotEmpty(message = "asset name not be empty")
 	private String assetName;
-	
-//	@DateTimeFormat(pattern ="dd-mm-yyyy")
-//	@JsonFormat(pattern = "yyyy/MM/dd")
-//	private Date issueDate; 
-	
+	@Range(min = 1, message = "Minimum quantity Should be 1")
 	private int quantity;
 	
 	
