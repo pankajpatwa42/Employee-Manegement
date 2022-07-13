@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,7 +55,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
 	public String duplicateValue(SQLIntegrityConstraintViolationException ex)
 	{
-		return "Duplicate Entry of value!!!";
+		return "Duplicate Entry of  value!!!";
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public String httpMessageNotReadableException(HttpMessageNotReadableException ex )
+	{
+		return "Provide Valid Date Format yyyy-mm-dd";
 	}
 }
 

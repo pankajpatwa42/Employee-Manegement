@@ -15,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -30,11 +34,9 @@ public class Organization {
 	private String name;
 	@NotEmpty(message = "Manager name reqiured!!!!!!")
 	private String manager;
-//	@NotEmpty(message = "Date should be their or Invalid Date Fromat (yyyy-mm-dd)")
-	private Date established;
 	
 	@JsonManagedReference
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="organization")
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy="organization")
 	private List<Employee> employees = new ArrayList<>();    //one org have many employeess....
 	
 	
@@ -62,13 +64,6 @@ public class Organization {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
-	public Date getEstablished() {
-		return established;
-	}
-	public void setEstablished(Date established) {
-		this.established = established;
-	}
-	
 	
 	
 	

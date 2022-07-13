@@ -1,16 +1,22 @@
 package Employee.Models;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -28,8 +34,12 @@ public class Assets {
 	
 	@NotEmpty(message = "asset name not be empty")
 	private String assetName;
-//	@NotEmpty(message = "Date not be empty or date format in yyyy-mm-dd")
-	private Date issueDate; 
+	
+//	@DateTimeFormat(pattern ="dd-mm-yyyy")
+//	@JsonFormat(pattern = "yyyy/MM/dd")
+//	private Date issueDate; 
+	
+	private int quantity;
 	
 	
 	
@@ -52,11 +62,11 @@ public class Assets {
 	public void setAssetName(String assetName) {
 		this.assetName = assetName;
 	}
-	public Date getIssueDate() {
-		return issueDate;
+	public int getQuantity() {
+		return quantity;
 	}
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 	
 	

@@ -3,19 +3,10 @@ package Employee.Services;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.apache.tomcat.util.http.fileupload.util.mime.RFC2231Utility;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import Employee.Exception.EmployeeRoleException;
 import Employee.Exception.ResourceNotFoundException;
@@ -91,8 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		existingEmployee.setLastName(employee.getLastName());
 		existingEmployee.setSalary(employee.getSalary());
 		existingEmployee.setWorkDept(employee.getWorkDept());
-		existingEmployee.setEmail(employee.getEmail());
-//		existingEmployee.setPassword(employee.getPassword());
+
 		employee.setPassword(passwordEncoder.encode(employee.getPassword()));
 		employeeRepository.save(existingEmployee);
 		return existingEmployee;
@@ -101,7 +91,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public void deleteEmployee(int id) {
 		// TODO Auto-generated method stub
-		employeeRepository.deleteById(id);
+		Employee employee = employeeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Employee", "ID", id));
+		employeeRepository.delete(employee);
 		
 	}
 
@@ -115,7 +106,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		if(role.getRoleName().equals("ROLE_ADMIN"))
 		{
 			Role r1 = new Role ();
-			r1.setReolId(2);
+			r1.setRoleId(2);
 			r1.setRoleName("ROLE_ADMIN");
 			Set<Role> Role = new HashSet<>();
 			Role.add(r1);
@@ -124,7 +115,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 		}else if (role.getRoleName().equals("ROLE_NORMAL"))
 		{
 			Role r1 = new Role ();
-			r1.setReolId(1);
+			r1.setRoleId(1);
 			r1.setRoleName("ROLE_NORMAL");
 			Set<Role> Role = new HashSet<>();
 			Role.add(r1);
@@ -136,41 +127,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 		}
 	}
-		
-		
-		
-		
-		
-		
-		
-//		else if (role.getRoleName().equals("ROLE_NORMAL")) {
-//			System.out.println("NORMAL USER");
-//			throw new EmployeeRoleException("Already Role is NORMAL ");
-//			
-//		}	else {
-//			System.out.println("Employee Id invalid");
-//			throw new EmployeeRoleException("Employee Id invalid which you logged in!!!!");
-
-		}
-//		if (role.getRoleName().equals("ROLE_NORMAL"))
-//		{
-//			Role r1 = new Role ();
-//			r1.setReolId(1);
-//			r1.setRoleName("ROLE_NORMAL");
-//			Set<Role> Role = new HashSet<>();
-//			Role.add(r1);
-//			asr.setRole(Role);
-//			employeeRepository.save(asr);
-//		}else if (role.getRoleName().equals("ROLE_ADMIN")) {
-//			System.out.println("ADMIN USER");
-//			throw new EmployeeRoleException("Already Role is ADMIN ");
-//			
-//		}	else {
-//			System.out.println("Employee Id invalid");
-//			throw new EmployeeRoleException("Employee Id invalid which you logged in!!!!");
-//
-//		}
-		
+}
 
 
 
@@ -181,12 +138,3 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
 
-
-
-
-
-
-
-
-	
-		

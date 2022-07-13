@@ -50,7 +50,7 @@ public class AssestsServiceImpl implements AssestsService {
 		// TODO Auto-generated method stub
 		Assets existingAssests = assestsRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Assest","ID",id));
 		existingAssests.setAssetName(assets.getAssetName());
-		existingAssests.setIssueDate(assets.getIssueDate());
+		existingAssests.setQuantity(assets.getQuantity());
 		assestsRepository.save(existingAssests);
 		return existingAssests;
 	}
@@ -59,7 +59,9 @@ public class AssestsServiceImpl implements AssestsService {
 	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteAssets(int id) {
 		// TODO Auto-generated method stub
-		assestsRepository.deleteById(id);
+		Assets assets = assestsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Assets", "ID", id));
+		assestsRepository.delete(assets);
+
 		
 	}
 

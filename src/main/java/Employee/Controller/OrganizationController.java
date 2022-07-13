@@ -39,17 +39,14 @@ public class OrganizationController {
 //	}
 //	
 	@GetMapping
-	@PreAuthorize("hasRole('ADMIN')")
 	public List<Organization> getAllOrganisation(){return organizationService.getAllOrganization();}
 	
 	@GetMapping("{id}")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Organization> getOrganizationById(@PathVariable("id") int id)
 	{
 		return new ResponseEntity<Organization>(organizationService.getOrganizationById(id),HttpStatus.OK);		
 	}
 	@PutMapping("{id}")
-	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Organization> updateOrganization(@PathVariable("id") int id,@Valid @RequestBody Organization organization)
 	{
 		return new ResponseEntity<Organization>(organizationService.updateOrganization(organization,id),HttpStatus.OK);		

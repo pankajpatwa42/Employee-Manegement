@@ -19,8 +19,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,23 +44,21 @@ public class Employee implements UserDetails{
 	
 	@NotEmpty(message = "Work Deptartment not be empty")
 	private String workDept;
+	
+//	@Positive(message = "Salary must be in POSITIVE")
+	@Range(min = 5000,message = "Minimum Salary must be 5000")
 	private int salary;
 	
-	@Email(message = "give proper Email format")
-	@Column(unique=true)
+	@Email(message = "give proper Email format ")
+	@Column(unique=true )
 	private String email;
 	
 	@NotEmpty(message = "Password not be Empty")
-//	@Pattern(regexp = "^[a-zA-Z0-9]{4,12}$",message = "Password contain atleast 1 digit and one lowercase[a-z]")
-//	@Pattern(regexp = "^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$", message= "Password contain atleast 1 digit and one lowercase[a-z] and minimum 8 digit")
-//	@Size(min = 8 ,max =12,message="Minimum 8 letter and maximum 12 letter")
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$",message = "Password contain atleast 1 digit and one lowercase[a-z] and uppercase[A-Z] and minimum 8 character")
-
 	private String password;
-
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<Role> Role = new HashSet<>();
 	
 	
@@ -134,7 +134,7 @@ public class Employee implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		List<SimpleGrantedAuthority>authorities=this.Role.stream()
-				.map((Role)-> new SimpleGrantedAuthority(Role.getRoleName()))
+				.map((role)-> new SimpleGrantedAuthority(role.getRoleName()))
 				.collect(Collectors.toList());		
 	return authorities;
 	}

@@ -1,13 +1,11 @@
 package Employee.Services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Employee.Exception.ResourceNotFoundException;
-import Employee.Models.Employee;
 import Employee.Models.Organization;
 import Employee.Repository.EmployeeRepository;
 import Employee.Repository.OrganizationRepository;
@@ -42,7 +40,6 @@ public class OrganizationServiceImpl implements OrganizationService {
 		Organization organization2 = organizationRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Organization","ID",id));
 		organization2.setName(organization.getName());
 		organization2.setManager(organization.getManager());
-		organization2.setEstablished(organization.getEstablished());
 		organizationRepository.save(organization2);
 		return organization2;
 
@@ -51,8 +48,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	public void deleteOrganization(int id) {
 		// TODO Auto-generated method stub
-		organizationRepository.deleteById(id);
-		
+		Organization organization = organizationRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("USER", "ID", id));
+		organizationRepository.delete(organization);
 	}
 	
 
